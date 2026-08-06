@@ -793,4 +793,12 @@
 
     <!-- If true, the display will be shifted around in ambient mode. -->
     <bool name="config_enableBurnInProtection">true</bool>
+
+    <!--
+         Munch exposes its proximity sensor through the Elliptic ultrasound HAL.  Keeping
+         Pocket Judge armed while the display is off starts the vendor TFA feedback route,
+         which can block audioserver parameter updates.  Calls continue to use the proximity
+         sensor directly; disable only the always-on Pocket Judge policy.
+    -->
+    <bool name="config_pocketModeSupported">false</bool>
 </resources>
