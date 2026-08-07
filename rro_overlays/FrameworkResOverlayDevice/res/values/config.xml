@@ -181,33 +181,21 @@
         <item>10</item>
     </integer-array>
 
-    <!-- Default list of files pinned by the Pinner Service -->
-    <string-array translatable="false" name="config_defaultPinnerServiceFiles">
-        <item>"/system/framework/framework.jar"</item>
-        <item>"/system/framework/services.jar"</item>
-        <item>"/apex/com.android.art/javalib/core-oj.jar"</item>
-        <item>"/apex/com.android.art/javalib/core-libart.jar"</item>
-        <item>"/system/lib64/libEGL.so"</item>
-        <item>"/system/lib64/libGLESv2.so"</item>
-        <item>"/system/lib64/libhwui.so"</item>
-        <item>"/system_ext/priv-app/SystemUI/SystemUI.apk"</item>
-        <item>"/vendor/lib64/libcamxexternalformatutils.so"</item>
-        <item>"/vendor/lib64/egl/libEGL_adreno.so"</item>
-        <item>"/vendor/lib64/egl/libGLESv2_adreno.so"</item>
-        <item>"/vendor/lib64/libCB.so"</item>
-        <item>"/vendor/lib64/libgsl.so"</item>
-        <item>"/vendor/lib64/libllvm-glnext.so"</item>
-        <item>"/vendor/lib64/libllvm-qcom.so"</item>
-        <item>"/system_ext/priv-app/SystemUI/oat/arm64/SystemUI.odex"</item>
-        <item>"/system/bin/surfaceflinger"</item>
-        <item>"/vendor/lib64/libcamxexternalformatutils.so"</item>
-        <item>"/vendor/lib64/libipebpsstriping.so"</item>
-        <item>"/vendor/lib64/libCB.so"</item>
-        <item>"/vendor/lib64/libgsl.so"</item>
-    </string-array>
+    <!--
+        Keep file-backed framework and app pages reclaimable. The old list
+        pinned more than 422 MiB on this 8 GiB device, including duplicate
+        SystemUI and vendor-library mappings. Under camera pressure those pages
+        could not be reclaimed even though camera app pinning was disabled.
 
-    <!-- Should the pinner service pin the Home application? -->
-    <bool name="config_pinnerHomeApp">false</bool>
+        Android 16 enables Home through a byte quota; config_pinnerHomeApp is
+        obsolete and therefore did not disable the observed 58 MiB Home pin.
+    -->
+    <string-array translatable="false" name="config_defaultPinnerServiceFiles" />
+    <integer name="config_pinnerHomePinBytes">0</integer>
+    <integer name="config_pinnerCameraPinBytes">0</integer>
+    <integer name="config_pinnerAssistantPinBytes">0</integer>
+    <integer name="config_pinnerWebviewPinBytes">0</integer>
+    <integer name="config_pinnerMaxPinnedMemoryPercentage">0</integer>
 
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
          autodetected from the Configuration. -->
