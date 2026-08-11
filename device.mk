@@ -425,6 +425,15 @@ PRODUCT_SOONG_NAMESPACES += \
 # Speed profile services and wifi-service to reduce RAM and storage
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
+# Task profiles
+#
+# munch launched on API 30, whose compatibility task-profile database replaces
+# current cpu/uclamp actions with legacy schedtune actions. Load this final
+# vendor fragment early enough for native services to cache the corrected
+# profiles, including the measured SurfaceFlinger foreground placement.
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
 
 # Telephony
 PRODUCT_PACKAGES += \
